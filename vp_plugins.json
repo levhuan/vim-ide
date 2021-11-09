@@ -1,0 +1,42 @@
+{
+	"scrooloose/nerdtree" : {
+		"config" : {
+			"on" : "NERDTreeToggle"
+		}
+	},
+	"tpope/vim-sensible" : {
+	},
+	"dense-analysis/ale" : {
+	},
+	"neoclide/coc.vim" : {
+		"config" : {
+			"for" : ["go", "py"],
+			"branch" : "release"
+		}
+	},
+	"fatih/vim-go" : {
+		"config" : {
+			"tag" : "v1.25",
+			"for" : "go",
+			"do" : ":GoUpdateBinaries"
+		},
+		"hotkeys" : {
+			"nmap <C-p>i" : ":PlugInstall<CR>",
+			"nmap <C-p>u" : ":PlugUpdate<CR>",
+			"nmap <C-p>s" : ":PlugStatus<CR>",
+			"nmap <C-p>d" : ":PlugDiff<CR>",
+			"nmap <C-p><C-u>" : ":PlugUpgrade<CR>"
+		}
+	},
+	"numirias/semshi" : {
+		"config" : {
+			"for" : "py",
+			"do" : ":UpdateRemotePlugins"
+		}
+	},
+	"Vimjas/vim-python-pep8-indent" : {
+		"config" : {
+			"for" : "py"
+		}
+	}
+}
