@@ -18,16 +18,57 @@ set showcmd
 call plug#begin('{vp_plugin_path}')
 '''
 
-DOTVIMRC_END = 'call plug#end()\n'
+DOTVIMRC_END = '''
+call plug#end()
+
+" Add git branch to the status line
+function! GitBranch()
+  return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d \'\\n\'")
+  endfunction
+
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
+'''
+
+#
+# vim-plug hotkeys. Should have added a global list of hotkeys
+#
+PLUG_HOTKEYS = '''
+nmap <C-p>i :PlugInstall<CR>
+nmap <C-p>u :PlugUpdate<CR>
+nmap <C-p>s :PlugStatus<CR>
+nmap <C-p>d :PlugDiff<CR>
+nmap <C-p><C-u> :PlugUpgrade<CR>
+'''
+
+MY_DOTVIMRC = '~/.vimrc'
+MY_DOTVIM = '~/.vim'
 
 class VimPlug(object):
     def __init__(self, output):
         self._output_dir = output
-        self._dotvim_dir = output + '/dotvim'
-        self._plugin_dir = output + '/vp-plugins'
+        self._dotvim_dir = output + "/dotvim"
+        self._plugin_dir = output + "/vp-plugins"
         self._plugins = dict()
-        CURL = 'curl -fLo {output}/dotvim/autoload/plug.vim --create-dirs '.format(output= output)
-        VIM_PLUG_URI = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        CURL = "curl -fLo {output}/dotvim/autoload/plug.vim --create-dirs ".format(output= output)
+        VIM_PLUG_URI = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
         os.system(CURL +  VIM_PLUG_URI)
 
 
@@ -38,6 +79,8 @@ class VimPlug(object):
 
     def _setup_vp_plugins_hotkeys(self):
         hk_file = open(self._plugin_dir + '/hotkeys.vim', 'w+')
+        hk_file.write('" key map for vim-plug command')
+        hk_file.write(PLUG_HOTKEYS)
         for p in self._plugins:
             try:
                 hotkeys = self._plugins[p]['hotkeys']
@@ -75,6 +118,23 @@ class VimPlug(object):
         self._generate_vimrc()
         self._setup_vp_plugins_hotkeys()
 
+    def update_user_setting(self):
+        """ set up symlink to the new .vim and .vimrc """
+        try:
+            os.rename(MY_DOTVIMRC, MY_DOTVIMRC + '.orig')
+        except FileNotFoundError:
+            pass
+        finally:
+            os.symlink(self._dotvim_dir + "/vimrc", MY_DOTVIMRC)
+   
+        try:
+            os.rename(MY_DOTVIM, MY_DOTVIM + ".orig")
+        except FileNotFoundError:
+            pass
+        finally:
+            os.symlink(self._dotvim_dir, MY_DOTVIM)
+   
+
 parser = argparse.ArgumentParser(description ='Vim Setup Options')
 parser.add_argument('--output', '-d', type=str, help='dotvim directory')
 parser.add_argument('plugins', nargs='?', type=str, help='json plugin info')
@@ -93,13 +153,11 @@ def main():
         print('Specify output directory where vim scripts will be generated!')
         return
 
-    print('output: ', args.output)
-    print('plugins', args.plugins)
-
     with open(args.plugins, "+r") as ifile:
         plugins = json.load(ifile)
         v = VimPlug(args.output)
         v.add_vp_plugins(plugins)
         v.generate_vimfiles()
+        v.update_user_setting()
 
 main()

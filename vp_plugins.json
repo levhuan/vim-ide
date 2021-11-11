@@ -2,9 +2,14 @@
 	"scrooloose/nerdtree" : {
 		"config" : {
 			"on" : "NERDTreeToggle"
+		},
+		"hotkeys" : {
+			"nmap <leader>nt" : ":NERDTree<CR>"
 		}
 	},
 	"tpope/vim-sensible" : {
+	},
+	"tpope/vim-fugitive" : {
 	},
 	"dense-analysis/ale" : {
 	},
@@ -21,11 +26,7 @@
 			"do" : ":GoUpdateBinaries"
 		},
 		"hotkeys" : {
-			"nmap <C-p>i" : ":PlugInstall<CR>",
-			"nmap <C-p>u" : ":PlugUpdate<CR>",
-			"nmap <C-p>s" : ":PlugStatus<CR>",
-			"nmap <C-p>d" : ":PlugDiff<CR>",
-			"nmap <C-p><C-u>" : ":PlugUpgrade<CR>"
+			"nmap <leader>gb" : ":GoBuild<CR>"
 		}
 	},
 	"numirias/semshi" : {
