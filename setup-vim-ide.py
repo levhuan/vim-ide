@@ -58,8 +58,8 @@ nmap <C-p>d :PlugDiff<CR>
 nmap <C-p><C-u> :PlugUpgrade<CR>
 '''
 
-MY_DOTVIMRC = '~/.vimrc'
-MY_DOTVIM = '~/.vim'
+MY_DOTVIMRC = os.path.expanduser('~/.vimrc')
+MY_DOTVIM = os.path.expanduser('~/.vim')
 
 class VimPlug(object):
     def __init__(self, output):
@@ -123,7 +123,7 @@ class VimPlug(object):
         try:
             os.rename(MY_DOTVIMRC, MY_DOTVIMRC + '.orig')
         except FileNotFoundError:
-            pass
+            print('{p} not found'.format(p=MY_DOTVIMRC))
         finally:
             os.symlink(self._dotvim_dir + "/vimrc", MY_DOTVIMRC)
    

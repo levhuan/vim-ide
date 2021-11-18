@@ -10,14 +10,18 @@
 	"tpope/vim-sensible" : {
 	},
 	"tpope/vim-fugitive" : {
+		"document": ":Git vim command"
 	},
 	"dense-analysis/ale" : {
 	},
-	"neoclide/coc.vim" : {
+	"neoclide/coc.nvim" : {
 		"config" : {
 			"for" : ["go", "py"],
 			"branch" : "release"
 		}
+	},
+	"AndrewRadev/splitjoin.vim" : {
+		"document" : "gJ and gS normal mode to join and split struct"
 	},
 	"fatih/vim-go" : {
 		"config" : {
@@ -26,7 +30,27 @@
 			"do" : ":GoUpdateBinaries"
 		},
 		"hotkeys" : {
-			"nmap <leader>gb" : ":GoBuild<CR>"
+			"nmap <leader>gb" : ":GoBuild<CR>",
+			"nmap <leader>cn" : ":cnext<CR>",
+			"nmap <leader>cp" : ":cprevious<CR>",
+			"nmap <leader>gr" : ":GoRun<CR>",
+			"nmap <leader>gt" : ":GoTest<CR>",
+			"nmap <leader>gtc" : ":GoTestCompile<CR>",
+			"nmap <leader>gtf" : ":GoTestFunc<CR>",
+			"nmap <leader>gc" : ":GoCoverage<CR>",
+			"nmap <leader>gct" : ":GoCoverageToggle<CR>",
+			"nmap <leader>gct" : ":GoCoverageToggle<CR>",
+			"nmap <leader>gv" : ":GoVet<CR>",
+			"nmap <leader>gl" : ":GoLint<CR>",
+			"nmap <leader>go" : ":GoMetaLinter<CR>",
+			"nmap <leader>gdec" : ":GoDeclsDir<CR>"
+		},
+		"document-vif" : "vif visual-select-in-function - text object",
+		"document-textobj" : "insert-mode: errp, json<tab>" 
+	},
+	"sebdah/vim-delve" : {
+		"config" : {
+			"for" : "go"
 		}
 	},
 	"numirias/semshi" : {
