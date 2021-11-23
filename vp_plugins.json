@@ -45,6 +45,10 @@
 			"nmap <leader>go" : ":GoMetaLinter<CR>",
 			"nmap <leader>gdec" : ":GoDeclsDir<CR>"
 		},
+                "var" : {
+                        "g:go_def_mode" : "gopls",
+                        "g:go_info_mode" : "gopls"
+                },
 		"document-vif" : "vif visual-select-in-function - text object",
 		"document-textobj" : "insert-mode: errp, json<tab>" 
 	},

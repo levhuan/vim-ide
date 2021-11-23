@@ -93,6 +93,17 @@ class VimPlug(object):
                 print('finished processing {p}'.format(p=p))
             finally:
                 pass
+
+            try:
+                vars = self._plugins[p]['var']
+                for v in vars:
+                    hk_file.write('let ' + v + ' = ' + "'" + vars[v] + "'" + '\n')
+            except KeyError:
+                print('No variables to configure for {p}'.format(p=p))
+            else:
+                print('finished processing {p}'.format(p=p))
+            finally:
+                pass
         hk_file.close()
 
     def _generate_vimrc(self):
