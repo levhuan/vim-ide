@@ -43,6 +43,7 @@
 			"nmap <leader>gv" : ":GoVet<CR>",
 			"nmap <leader>gl" : ":GoLint<CR>",
 			"nmap <leader>go" : ":GoMetaLinter<CR>",
+			"nmap <leader>gr" : ":GoReferrers<CR>",
 			"nmap <leader>gdec" : ":GoDeclsDir<CR>"
 		},
                 "var" : {
